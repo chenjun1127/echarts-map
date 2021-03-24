@@ -16,7 +16,6 @@ const app = createApp({
     return { date: new Date() };
   },
   mounted() {
-    console.log(11);
     let aa = lineBase(['周一', '周二', '周三', '周四', '周五', '周六', '周日'], [120, 132, 101, 134, 90, 230, 210], [220, 182, 191, 234, 290, 330, 310]);
     initEcharts(document.querySelector('#left-mid-charts'), aa);
 
