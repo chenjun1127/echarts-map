@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.0.7/vue.global.prod.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.0.2/echarts.min.js"></script>
+    <script src="http://apps.bdimg.com/libs/jquery/1.8.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+
+  <body>
+    <div id="app" class="container">
+      <div class="header">
+        <div class="header-logo">l0go</div>
+        <div class="header-title">智慧停车大数据平台</div>
+        <div class="header-time">
+          <div class="current-date-time" v-html="formatDate(date)"></div>
+        </div>
+      </div>
+      <div class="space"></div>
+      <div class="main">
+        <div class="aside-left">
+          <div class="left-top"></div>
+          <div class="left-mid">
+            <div id="left-mid-charts"></div>
+          </div>
+          <div class="left-bottom">
+            <div id="left-bottom-charts"></div>
+          </div>
+        </div>
+        <div class="aside-content">
+          <div class="content-top"></div>
+          <div class="content-mid">
+            <div id="content-mid-charts"></div>
+          </div>
+          <div class="content-bottom"></div>
+        </div>
+        <div class="aside-right">
+          <div class="right-top"></div>
+          <div class="right-mid">
+            <div id="right-mid-charts"></div>
+          </div>
+          <div class="right-bottom"></div>
+        </div>
+      </div>
+      <div class="space"></div>
+    </div>
+    <script src="./js/map/china.js"></script>
+   
+    <script src="./js/main.js" type="module"></script>
+    <!-- <script src="./js/chart/china.js"></script>
+    <script src="./js/mymap.js"></script> -->
+   
+  </body>
+</html>

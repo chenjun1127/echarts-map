@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>echarts.js插件实现中国地图省份选择效果</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.0.2/echarts.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: #0b0f2a;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="main" style="height: 100vh; width: 100vw"></div>
+    <script>
+      // https://echarts.apache.org/zh/option.html#geo.map，两种方式引入中国地图，这里采用第二种注册的方式，第一种方式为引入js
+      // 地图数据来源：http://datav.aliyun.com/tools/atlas/#&lat=30.332329214580188&lng=106.72278672066881&zoom=3.5
+      // 以湖北省为例，点击湖北省回进入下一级，如果要点击更深层级，需要知道相应编码
+      var code = '420000';
+      var myChart = echarts.init(document.getElementById('main'));
+      var data = [
+        {
+          name: '华南农业大学',
+          value: [113.361285, 23.164035, 200]
+        },
+        {
+          name: '湖北工业大学',
+          value: [115.069632, 30.235758, 500]
+        }
+      ];
+      function initEchartsMap(chart, code) {
+        $.get(`https://geo.datav.aliyun.com/areas/bound/geojson?code=${code}_full`, function (json) {
+          console.log(json);
+          // console.log(json.features[0].properties.name)
+          var mapName = json.features[0].properties.name;
+          // 此处注册了，下面geo才找的到，所以必须一致
+          echarts.registerMap(mapName, json);
+          chart.setOption({
+            title: {
+              text: mapName === '北京市' ? '中国' : mapName,
+              left: 'center',
+              top: 30,
+              textStyle: {
+                fontSize: 20,
+                color: '#fff'
+              }
+            },
+            tooltip: {
+              trigger: 'item',
+              formatter: function (params) {
+                return '<p>' + params.name + '</p><p class="conut-next">停车场：' + params.value[2] + '个</p>';
+              },
+              backgroundColor: '#26272F',
+              borderRadius: 5,
+              borderColor: '#26272F',
+              textStyle: {
+                color: '#fff'
+              }
+            },
+            geo: {
+              map: mapName,
+              zoom: 1,
+              label: {
+                emphasis: {
+                  show: false
+                }
+              },
+              label: {
+                show: true,
+                color: 'white',
+                emphasis: {
+                  color: '#f90'
+                }
+              },
+              roam: true, //是否开启鼠标缩放和平移漫游
+              itemStyle: {
+                normal: {
+                  areaColor: '#142957',
+                  borderColor: '#0692a4'
+                },
+                emphasis: {
+                  areaColor: '#0b1c2d'
+                }
+              }
+            },
+            series: [
+              {
+                name: 'pm2.5',
+                type: 'effectScatter',
+                coordinateSystem: 'geo',
+                rippleEffect: {
+                  brushType: 'stroke'
+                },
+                symbolSize: function (val) {
+                  return val[2] / 20;
+                },
+                itemStyle: {
+                  normal: {
+                    color: '#07B684'
+                  }
+                },
+                data: data
+              }
+            ]
+          });
+        });
+      }
+      initEchartsMap(myChart, '100000');
+
+      myChart.on('click', function (params) {
+        console.log(params);
+        if (params.name === '湖北省') {
+          initEchartsMap(myChart, code);
+        }
+      });
+      // 双击回退
+      myChart.on('dblclick', function () {
+        initEchartsMap(myChart, '100000');
+      });
+    </script>
+  </body>
+</html>
