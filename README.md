@@ -1,6 +1,7 @@
 # echarts-map
 
 echarts-map地图打点，点击进入下一级。
+
 1、确保先安装sass 
 ```shell
 npm install -g sass
