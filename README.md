@@ -11,3 +11,5 @@ npm install -g sass
 sass --watch scss/main.scss:css/main.css -s compressed
 ```
 3、本地开服务器，浏览index.html
+
+[GithubPages](https://chenjun1127.github.io/echarts-map/)
