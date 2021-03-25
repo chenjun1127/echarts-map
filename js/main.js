@@ -4,7 +4,39 @@ import initEcharts from './initEcharts.js';
 import { barBase, lineBase, pieBase } from './chart/commonEcharts.js';
 import { initEchartsMap } from './chart/initEchartsMap.js';
 const data = reactive({
-  state: 12
+  parkCount: 373,
+  nopersonCount: 170,
+  parkSeat: 1500,
+  orderCount: 1800,
+  onlineOrder: 160,
+  moneyOrder: 650,
+  totalMoney: 18000,
+  chargeData: [
+    {
+      parkName: '慧谷车场-停车场',
+      plate: '粤B235416',
+      content: '停车1小时8秒并支付停车费5元',
+      time: '09:10'
+    },
+    {
+      parkName: '慧谷车场-停车场',
+      plate: '粤B235416',
+      content: '停车1小时8秒并支付停车费5元',
+      time: '09:10'
+    },
+    {
+      parkName: '慧谷车场-停车场',
+      plate: '粤B235416',
+      content: '停车1小时8秒并支付停车费5元',
+      time: '09:10'
+    },
+    {
+      parkName: '慧谷车场-停车场',
+      plate: '粤B235416',
+      content: '停车1小时8秒并支付停车费5元',
+      time: '09:10'
+    }, 
+  ]
 });
 const app = createApp({
   setup() {
@@ -29,7 +61,7 @@ const app = createApp({
     initEcharts(document.querySelector('#left-bottom-charts'), bb);
 
     let cc = barBase([100, 1000, 2500, 15620, 652, 25000]);
-    initEcharts(document.querySelector('#right-mid-charts'), cc); 
+    initEcharts(document.querySelector('#right-mid-charts'), cc);
 
     var myChartMap = echarts.init(document.querySelector('#content-mid-charts'));
     window.chartMap = myChartMap;

@@ -22,36 +22,84 @@
       <div class="space"></div>
       <div class="main">
         <div class="aside-left">
-          <div class="left-top"></div>
+          <div class="left-top">
+            <ul class="common-list">
+              <li>
+                <h1>{{parkCount}}</h1>
+                <p>车场个数</p>
+              </li>
+              <li>
+                <h1>{{parkSeat}}</h1>
+                <p>车位总数</p>
+              </li>
+              <li>
+                <h1>{{nopersonCount}}</h1>
+                <p>无人值守个数</p>
+              </li>
+            </ul>
+          </div>
           <div class="left-mid">
+            <h1 class="chart-title">停车场车流趋势</h1>
             <div id="left-mid-charts"></div>
           </div>
           <div class="left-bottom">
+            <h1 class="chart-title">车位使用率</h1>
             <div id="left-bottom-charts"></div>
           </div>
         </div>
         <div class="aside-content">
-          <div class="content-top"></div>
+          <div class="content-top">
+            <h1>
+              <span>今日总收入</span>
+              <em>{{totalMoney}}</em>
+            </h1>
+          </div>
           <div class="content-mid">
             <div id="content-mid-charts"></div>
           </div>
-          <div class="content-bottom"></div>
+          <div class="content-bottom">
+            <div class="center-bottom-list">
+              <ul>
+                 <li v-for="item in chargeData" :key="item">
+                    <span>{{item.parkName}}</span>
+                    <span>{{item.plate}}</span>
+                    <span>{{item.content}}</span>
+                    <span>{{item.time}}</span>
+                 </li>
+              </ul>
+            </div>
+          </div>
         </div>
         <div class="aside-right">
-          <div class="right-top"></div>
+          <div class="right-top">
+            <ul class="common-list">
+              <li>
+                <h1>{{orderCount}}</h1>
+                <p>订单总数</p>
+              </li>
+              <li>
+                <h1>{{onlineOrder}}</h1>
+                <p>移动单数</p>
+              </li>
+              <li>
+                <h1>{{moneyOrder}}</h1>
+                <p>现金单数</p>
+              </li>
+            </ul>
+          </div>
           <div class="right-mid">
+            <h1 class="chart-title">停车场车流趋势</h1>
             <div id="right-mid-charts"></div>
           </div>
-          <div class="right-bottom"></div>
+          <div class="right-bottom">
+            <h1 class="chart-title">异常处理排名</h1>
+            <div class="b"></div>
+          </div>
         </div>
       </div>
       <div class="space"></div>
     </div>
-    <script src="./js/map/china.js"></script>
-   
-    <script src="./js/main.js" type="module"></script>
-    <!-- <script src="./js/chart/china.js"></script>
-    <script src="./js/mymap.js"></script> -->
-   
+    <script src="./js/map/china.js"></script>   
+    <script src="./js/main.js" type="module"></script>    
   </body>
 </html>
