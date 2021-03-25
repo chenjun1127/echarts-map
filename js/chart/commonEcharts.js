@@ -1,10 +1,32 @@
-export function lineBase(xdata, ydata1, ydata2) {
+export function lineBase(data, colorArr = ['#00c6ff', '#ff724c', '#f90']) {
+  const legendArr = data.data.map(item => item.name);
+  const series = [];
+  data.data.forEach((item, i) => {
+    series.push({
+      type: 'line',
+      name: legendArr[i],
+      smooth: true,
+      symbol: 'none',
+      lineStyle: {
+        normal: {
+          color: colorArr[i],
+          width: 1
+        }
+      },
+      itemStyle: {
+        normal: {
+          borderColor: '#fff'
+        }
+      },
+      data: item.arr
+    });
+  });
   return {
-    color: ['#00c6ff', '#ff724c'],
+    color: colorArr,
     legend: {
       top: 0,
       right: 5,
-      data: ['人流量', '车流量'],
+      data: legendArr,
       selectedMode: false,
       textStyle: {
         color: '#fff',
@@ -13,18 +35,18 @@ export function lineBase(xdata, ydata1, ydata2) {
     },
     tooltip: {
       trigger: 'axis',
-      formatter: '时间：{b}<br/>人流量：{c0}<br/>车流量：{c1}',
+      // formatter: '{b}<br/>' + legendArr[0] + '：{c0}<br/>' + legendArr[1] + '：{c1}',
       axisPointer: {
         type: 'line',
         lineStyle: {
-          color: 'rgba(255, 255, 255, .2)',
-          width: 2
+          color: 'rgba(255, 255, 255, .2)'
         }
       },
       textStyle: {
         color: '#fff',
-        fontSize: 12
+        fontSize: 14
       },
+      borderColor: '#39437b',
       backgroundColor: '#39437b'
     },
     grid: {
@@ -41,7 +63,7 @@ export function lineBase(xdata, ydata1, ydata2) {
       axisLine: {
         lineStyle: {
           color: 'rgba(255, 255, 255, .2)',
-          width: 2
+          width: 1
         }
       },
       axisLabel: {
@@ -49,7 +71,7 @@ export function lineBase(xdata, ydata1, ydata2) {
         fontSize: 12,
         color: '#fff'
       },
-      data: xdata
+      data: data.nameArr
     },
     yAxis: {
       type: 'value',
@@ -58,7 +80,7 @@ export function lineBase(xdata, ydata1, ydata2) {
       axisLine: {
         lineStyle: {
           color: 'rgba(255, 255, 255, .2)',
-          width: 2
+          width: 1
         }
       },
       axisLabel: {
@@ -73,44 +95,7 @@ export function lineBase(xdata, ydata1, ydata2) {
         }
       }
     },
-    series: [
-      {
-        type: 'line',
-        name: '人流量',
-        smooth: true,
-        symbol: 'none',
-        lineStyle: {
-          normal: {
-            color: '#fff',
-            width: 1
-          }
-        },
-        itemStyle: {
-          normal: {
-            borderColor: '#fff'
-          }
-        },
-        data: ydata1
-      },
-      {
-        type: 'line',
-        name: '车流量',
-        smooth: true,
-        symbol: 'none',
-        lineStyle: {
-          normal: {
-            color: '#fff',
-            width: 1
-          }
-        },
-        itemStyle: {
-          normal: {
-            borderColor: '#fff'
-          }
-        },
-        data: ydata2
-      }
-    ]
+    series: series
   };
 }
 export function pieBase(data) {
@@ -160,6 +145,12 @@ export function barBase(data) {
       trigger: 'axis',
       axisPointer: {
         type: 'shadow'
+      },
+      borderColor: '#39437b',
+      backgroundColor: '#39437b',
+      textStyle: {
+        color: '#fff',
+        fontSize: 14
       }
     },
     grid: {
@@ -177,6 +168,13 @@ export function barBase(data) {
           color: '#fff',
           width: 0.5
         }
+      },
+      splitLine: {
+        show: true,
+        lineStyle: {
+          color: 'rgba(255, 255, 255, .2)',
+          type: 'dashed'
+        }
       }
     },
     yAxis: {
@@ -187,17 +185,17 @@ export function barBase(data) {
           color: '#fff',
           width: 1
         }
-      },
+      }
     },
     series: [
       {
         name: '2011年',
         type: 'bar',
-        barWidth:12,
+        barWidth: 12,
         data,
         itemStyle: {
           normal: {
-            borderRadius: [0, 20, 20, 0] ,
+            borderRadius: [0, 20, 20, 0],
             color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
               {
                 offset: 0,

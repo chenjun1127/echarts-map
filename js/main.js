@@ -19,23 +19,23 @@ const data = reactive({
       time: '09:10'
     },
     {
-      parkName: '慧谷车场-停车场',
-      plate: '粤B235416',
+      parkName: '天安小区车场-停车场',
+      plate: '粤BZ6895',
       content: '停车1小时8秒并支付停车费5元',
       time: '09:10'
     },
     {
-      parkName: '慧谷车场-停车场',
-      plate: '粤B235416',
+      parkName: '智慧云谷车场-停车场',
+      plate: '粤B23541',
       content: '停车1小时8秒并支付停车费5元',
       time: '09:10'
     },
     {
-      parkName: '慧谷车场-停车场',
-      plate: '粤B235416',
+      parkName: '和平小区车场-停车场',
+      plate: '粤B23516',
       content: '停车1小时8秒并支付停车费5元',
       time: '09:10'
-    }, 
+    }
   ]
 });
 const app = createApp({
@@ -48,24 +48,57 @@ const app = createApp({
     return { date: new Date() };
   },
   mounted() {
-    let aa = lineBase(['周一', '周二', '周三', '周四', '周五', '周六', '周日'], [120, 132, 101, 134, 90, 230, 210], [220, 182, 191, 234, 290, 330, 310]);
+    var parkData = {
+      nameArr: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+      data: [
+        {
+          name: '人流量',
+          arr: [1200, 150, 32551, 2652, 5412, 1200, 1100]
+        },
+        {
+          name: '车流量',
+          arr: [10000, 1540, 25236, 1500, 1896, 980, 356]
+        }
+      ]
+    };
+    let aa = lineBase(parkData, ['#00c6ff', '#ff724c']);
     initEcharts(document.querySelector('#left-mid-charts'), aa);
 
     let bb = pieBase([
-      { value: 1048, name: '搜索引擎' },
-      { value: 735, name: '直接访问' },
-      { value: 580, name: '邮件营销' },
-      { value: 484, name: '联盟广告' },
-      { value: 300, name: '视频广告' }
+      { value: 1048, name: '产权车' },
+      { value: 735, name: '临时车' },
+      { value: 580, name: '人防车' }
     ]);
     initEcharts(document.querySelector('#left-bottom-charts'), bb);
 
     let cc = barBase([100, 1000, 2500, 15620, 652, 25000]);
-    initEcharts(document.querySelector('#right-mid-charts'), cc);
+    initEcharts(document.querySelector('#right-bottom-charts'), cc);
 
     var myChartMap = echarts.init(document.querySelector('#content-mid-charts'));
     window.chartMap = myChartMap;
     initEchartsMap('china', '中国');
+
+    var incomeData = {
+      nameArr: ['03-19', '03-20', '03-21', '03-22', '03-23', '03-24', '03-25'],
+      data: [
+        {
+          name: '总收入',
+          arr: [640, 314, 1302, 1574, 1550, 560, 4165]
+        },
+        {
+          name: '现金收入',
+          arr: [120, 132, 101, 1340, 900, 230, 1065]
+        },
+        {
+          name: '移动收入',
+          arr: [520, 182, 1201, 234, 650, 330, 3100]
+        }
+      ]
+    };
+
+    let dd = lineBase(incomeData);
+    initEcharts(document.querySelector('#right-mid-charts'), dd);
+
     var _this = this;
     this.timer = setInterval(() => {
       _this.date = new Date(); // 修改日期数据
