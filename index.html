@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Document</title>
+    <title>智慧停车大数据平台</title>
     <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.0.7/vue.global.prod.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.0.2/echarts.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
@@ -34,23 +34,47 @@
               </li>
               <li>
                 <h1>{{nopersonCount}}</h1>
-                <p>无人值守个数</p>
+                <p>月卡数量</p>
               </li>
             </ul>
           </div>
-          <div class="left-mid">
+          <div class="left-mid-1">
+            <ul class="common-list">
+              <li>
+                <h1>{{parkCount}}</h1>
+                <p>无人值守车场</p>
+              </li>
+              <li>
+                <h1>{{parkSeat}}</h1>
+                <p>节约人员数量</p>
+              </li>
+              <li>
+                <h1>{{nopersonCount}}</h1>
+                <p>节约人工成本</p>
+              </li>
+            </ul>
+          </div>
+          <div class="left-mid-2">
             <h1 class="chart-title">停车场车流趋势</h1>
-            <div id="left-mid-charts"></div>
+            <div id="left-mid-2-charts"></div>
           </div>
           <div class="left-bottom">
-            <h1 class="chart-title">车位使用率</h1>
-            <div id="left-bottom-charts"></div>
+            <h1 class="chart-title">公安平台实时上传</h1>
+            <div class="left-bottom-list">
+              <ul>
+                <li v-for="item in securityData" :key="item">
+                   <span>{{item.parkName}}</span>
+                   <span>{{item.plate}}</span>
+                   <span>{{item.content}}</span>
+                </li>
+             </ul>
+            </div>
           </div>
         </div>
         <div class="aside-content">
           <div class="content-top">
             <h1>
-              <span>今日总收入</span>
+              <span>今日临停总收入</span>
               <em>{{totalMoney}}</em>
             </h1>
           </div>
@@ -79,7 +103,7 @@
               </li>
               <li>
                 <h1>{{onlineOrder}}</h1>
-                <p>移动单数</p>
+                <p>扫码单数</p>
               </li>
               <li>
                 <h1>{{moneyOrder}}</h1>
@@ -92,7 +116,7 @@
             <div id="right-mid-charts"></div>
           </div>
           <div class="right-bottom">
-            <h1 class="chart-title">异常处理排名</h1>
+            <h1 class="chart-title">车场异常分析</h1>
             <div id="right-bottom-charts"></div>
           </div>
         </div>

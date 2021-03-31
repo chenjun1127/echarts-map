@@ -29,11 +29,31 @@ const data = reactive({
       plate: '粤B23541',
       content: '停车1小时8秒并支付停车费5元',
       time: '09:10'
+    }
+  ],
+  securityData: [
+    {
+      parkName: '慧谷车场-停车场',
+      plate: '粤B235416',
+      content: '上传成功',
+      time: '09:10'
     },
     {
-      parkName: '和平小区车场-停车场',
-      plate: '粤B23516',
-      content: '停车1小时8秒并支付停车费5元',
+      parkName: '天安小区车场-停车场',
+      plate: '粤BZ6895',
+      content: '上传失败',
+      time: '09:10'
+    },
+    {
+      parkName: '智慧云谷车场-停车场',
+      plate: '粤B23541',
+      content: '上传失败',
+      time: '09:10'
+    },
+    {
+      parkName: '智慧云谷车场-停车场',
+      plate: '粤B23541',
+      content: '上传成功',
       time: '09:10'
     }
   ]
@@ -62,16 +82,37 @@ const app = createApp({
       ]
     };
     let aa = lineBase(parkData, ['#00c6ff', '#ff724c']);
-    initEcharts(document.querySelector('#left-mid-charts'), aa);
+    initEcharts(document.querySelector('#left-mid-2-charts'), aa);
 
-    let bb = pieBase([
-      { value: 1048, name: '产权车' },
-      { value: 735, name: '临时车' },
-      { value: 580, name: '人防车' }
-    ]);
-    initEcharts(document.querySelector('#left-bottom-charts'), bb);
+    let barData = [
+      {
+        id: 0,
+        name: '天安云谷停车场',
+        value: 120
+      },
+      {
+        id: 0,
+        name: '星河盛世停车场',
+        value: 220
+      },
+      {
+        id: 0,
+        name: '保利国都一号停车场',
+        value: 600
+      },
+      {
+        id: 0,
+        name: '皇家一号停车场',
+        value: 800
+      },
+      {
+        id: 0,
+        name: '天地一方停车场',
+        value: 360
+      }
+    ];
 
-    let cc = barBase([100, 1000, 2500, 15620, 652, 25000]);
+    let cc = barBase(barData, '2021年');
     initEcharts(document.querySelector('#right-bottom-charts'), cc);
 
     var myChartMap = echarts.init(document.querySelector('#content-mid-charts'));

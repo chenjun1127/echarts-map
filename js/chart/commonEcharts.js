@@ -139,7 +139,7 @@ export function pieBase(data) {
   };
 }
 
-export function barBase(data) {
+export function barBase(data, seriesName) {
   return {
     tooltip: {
       trigger: 'axis',
@@ -179,7 +179,8 @@ export function barBase(data) {
     },
     yAxis: {
       type: 'category',
-      data: ['巴西', '印尼', '美国', '印度', '中国', '世界人口(万)'],
+      // data: ['巴西', '印尼', '美国', '印度', '中国', '世界人口(万)'],
+      data: data.map(item => item.name),
       axisLine: {
         lineStyle: {
           color: '#fff',
@@ -189,10 +190,10 @@ export function barBase(data) {
     },
     series: [
       {
-        name: '2011年',
+        name: seriesName,
         type: 'bar',
         barWidth: 12,
-        data,
+        data: data.map(item => item.value),
         itemStyle: {
           normal: {
             borderRadius: [0, 20, 20, 0],
