@@ -77,7 +77,7 @@ body {
         }
       }
     }
-    .header-logo{
+    .header-logo {
       font-size: 24px;
       font-weight: bold;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -124,7 +124,7 @@ body {
         @include bgImg('../img/bg_chart.png');
         > div {
           @include percent100;
-          @include calc(height, "100% - 36px");
+          @include calc(height, '100% - 36px');
         }
       }
       .left-mid-2 {
@@ -134,7 +134,7 @@ body {
         @include bgImg('../img/bg_chart.png');
         > div {
           @include percent100;
-          @include calc(height, "100% - 36px");
+          @include calc(height, '100% - 36px');
         }
       }
       .left-bottom {
@@ -144,7 +144,7 @@ body {
         @include bgImg('../img/bg_chart.png');
         > div {
           @include percent100;
-          @include calc(height, "100% - 36px");
+          @include calc(height, '100% - 36px');
         }
         .left-bottom-list {
           height: 100%;
@@ -167,7 +167,7 @@ body {
               &:nth-of-type(1) {
                 width: 200px;
               }
-               
+
               &:nth-of-type(2) {
                 flex: 1;
               }
@@ -268,7 +268,7 @@ body {
         @include bgImg('../img/bg_chart.png');
         > div {
           @include percent100;
-          @include calc(height, "100% - 36px");
+          @include calc(height, '100% - 36px');
         }
       }
       .right-bottom {
@@ -278,7 +278,7 @@ body {
         @include bgImg('../img/bg_chart.png');
         > div {
           @include percent100;
-          @include calc(height, "100% - 36px");
+          @include calc(height, '100% - 36px');
         }
       }
     }
@@ -291,7 +291,7 @@ body {
   padding: 0 20px;
   li {
     list-style: none;
-    width: calc(100% / 3);  
+    width: calc(100% / 3);
     text-align: center;
     h1 {
       font-size: 30px;
