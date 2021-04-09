@@ -44,7 +44,7 @@ export function lineBase(data, colorArr = ['#00c6ff', '#ff724c', '#f90']) {
       },
       textStyle: {
         color: '#fff',
-        fontSize: 14
+        fontSize: 12
       },
       borderColor: '#39437b',
       backgroundColor: '#39437b'
@@ -190,10 +190,10 @@ export function barBase(data, seriesName) {
     },
     series: [
       {
-        name: seriesName,
+        name: seriesName[0],
         type: 'bar',
-        barWidth: 12,
-        data: data.map(item => item.value),
+        barWidth: 8,
+        data: data.map(item => item.value0),
         itemStyle: {
           normal: {
             borderRadius: [0, 20, 20, 0],
@@ -205,6 +205,48 @@ export function barBase(data, seriesName) {
               {
                 offset: 1,
                 color: '#1f3699'
+              }
+            ])
+          }
+        }
+      },
+      {
+        name: seriesName[1],
+        type: 'bar',
+        barWidth: 8,
+        data: data.map(item => item.value1),
+        itemStyle: {
+          normal: {
+            borderRadius: [0, 20, 20, 0],
+            color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+              {
+                offset: 0,
+                color: '#E87E82'
+              },
+              {
+                offset: 1,
+                color: '#F6A078'
+              }
+            ])
+          }
+        }
+      },
+      {
+        name: seriesName[2],
+        type: 'bar',
+        barWidth: 8,
+        data: data.map(item => item.value2),
+        itemStyle: {
+          normal: {
+            borderRadius: [0, 20, 20, 0],
+            color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+              {
+                offset: 0,
+                color: '#A9DF96'
+              },
+              {
+                offset: 1,
+                color: '#22DF96'
               }
             ])
           }

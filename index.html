@@ -6,6 +6,7 @@
     <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.0.7/vue.global.prod.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.0.2/echarts.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.js"></script>
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/main.css" />
   </head>
@@ -13,8 +14,10 @@
   <body>
     <div id="app" class="container">
       <div class="header">
-        <div class="header-logo">Logo</div>
-        <div class="header-title">智慧停车大数据平台</div>
+        <div class="header-logo">
+          <img :src="logo" class="img-logo" />
+        </div>
+        <div class="header-title">{{title1}}</div>
         <div class="header-time">
           <div class="current-date-time" v-html="formatDate(date)"></div>
         </div>
@@ -33,7 +36,7 @@
                 <p>车位总数</p>
               </li>
               <li>
-                <h1>{{nopersonCount}}</h1>
+                <h1>{{fixCount}}</h1>
                 <p>月卡数量</p>
               </li>
             </ul>
@@ -41,33 +44,33 @@
           <div class="left-mid-1">
             <ul class="common-list">
               <li>
-                <h1>{{parkCount}}</h1>
+                <h1>{{nopersonCount}}</h1>
                 <p>无人值守车场</p>
               </li>
               <li>
-                <h1>{{parkSeat}}</h1>
+                <h1>{{saveDutycount}}</h1>
                 <p>节约人员数量</p>
               </li>
               <li>
-                <h1>{{nopersonCount}}</h1>
-                <p>节约人工成本</p>
+                <h1>{{saveDutymoney}}</h1>
+                <p>节约人工成本(万元)</p>
               </li>
             </ul>
           </div>
           <div class="left-mid-2">
-            <h1 class="chart-title">停车场车流趋势</h1>
+            <h1 class="chart-title">{{title2}}</h1>
             <div id="left-mid-2-charts"></div>
           </div>
           <div class="left-bottom">
-            <h1 class="chart-title">公安平台实时上传</h1>
+            <h1 class="chart-title">{{title3}}</h1>
             <div class="left-bottom-list">
               <ul>
                 <li v-for="item in securityData" :key="item">
-                   <span>{{item.parkName}}</span>
-                   <span>{{item.plate}}</span>
-                   <span>{{item.content}}</span>
+                  <span>{{item.park_name}}</span>
+                  <span>{{item.plate}}</span>
+                  <span>{{item.real_msg}}</span>
                 </li>
-             </ul>
+              </ul>
             </div>
           </div>
         </div>
@@ -84,12 +87,12 @@
           <div class="content-bottom">
             <div class="center-bottom-list">
               <ul>
-                 <li v-for="item in chargeData" :key="item">
-                    <span>{{item.parkName}}</span>
-                    <span>{{item.plate}}</span>
-                    <span>{{item.content}}</span>
-                    <span>{{item.time}}</span>
-                 </li>
+                <li v-for="item in chargeData" :key="item">
+                  <span>{{item.park_name}}</span>
+                  <span>{{item.plate}}</span>
+                  <span>{{item.charge_count}}</span>
+                  <span :style="{'color': item.charge_type===1?'green':'red'}">{{item.charge_type===1?'在线':'手动'}}</span>
+                </li>
               </ul>
             </div>
           </div>
@@ -112,18 +115,18 @@
             </ul>
           </div>
           <div class="right-mid">
-            <h1 class="chart-title">收入趋势</h1>
+            <h1 class="chart-title">{{title4}}</h1>
             <div id="right-mid-charts"></div>
           </div>
           <div class="right-bottom">
-            <h1 class="chart-title">车场异常分析</h1>
+            <h1 class="chart-title">{{title5}}</h1>
             <div id="right-bottom-charts"></div>
           </div>
         </div>
       </div>
       <div class="space"></div>
     </div>
-    <script src="./js/map/china.js"></script>   
-    <script src="./js/main.js" type="module"></script>    
+    <script src="./js/map/china.js"></script>
+    <script src="./js/main.js" type="module"></script>
   </body>
 </html>

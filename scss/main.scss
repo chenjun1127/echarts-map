@@ -4,6 +4,11 @@
   font-weight: normal;
   font-style: normal;
 }
+.no-data {
+  text-align: center;
+  font-size: 32px;
+  padding-top: 10%;
+}
 body {
   width: 100%;
   height: 100%;
@@ -81,10 +86,13 @@ body {
       font-size: 24px;
       font-weight: bold;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      .img-logo {
+        height: 64px;
+      }
     }
     .header-title {
       flex: 1;
-      font-size: 32px;
+      font-size: 36px;
       text-align: center;
     }
   }
@@ -150,7 +158,7 @@ body {
           height: 100%;
           ul {
             padding: 0 0;
-            font-size: 14px;
+            font-size: 16px;
           }
           li {
             list-style: none;
@@ -197,6 +205,7 @@ body {
           margin: 0;
           span {
             margin-right: 20px;
+            font-size: 28px;
           }
           em {
             color: red;
@@ -206,7 +215,7 @@ body {
         }
       }
       .content-mid {
-        height: 60%;
+        height: 56%;
         box-sizing: border-box;
         @include bgImg('../img/bg_map.png');
         > div {
@@ -214,7 +223,7 @@ body {
         }
       }
       .content-bottom {
-        height: 20%;
+        height: 24%;
         box-sizing: border-box;
         padding: 10px;
         @include bgImg('../img/bg_order.png');
@@ -222,7 +231,7 @@ body {
           height: 100%;
           ul {
             padding: 0 15px;
-            font-size: 14px;
+            font-size: 16px;
           }
           li {
             list-style: none;
@@ -237,10 +246,10 @@ body {
             span {
               @include ellipsis();
               &:nth-of-type(1) {
-                width: 150px;
+                width: 220px;
               }
               &:nth-of-type(2) {
-                width: 100px;
+                width: 200px;
               }
               &:nth-of-type(3) {
                 flex: 1;
@@ -294,10 +303,13 @@ body {
     width: calc(100% / 3);
     text-align: center;
     h1 {
-      font-size: 30px;
+      font-size: 34px;
       color: #f90;
       margin-bottom: 10px;
       font-family: '04b03b';
+    }
+    p {
+      font-size: 18px;
     }
   }
 }

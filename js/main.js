@@ -1,62 +1,29 @@
 const { createApp, reactive, toRefs } = Vue;
-
+import { getQueryString } from './utils.js';
 import initEcharts from './initEcharts.js';
 import { barBase, lineBase, pieBase } from './chart/commonEcharts.js';
 import { initEchartsMap } from './chart/initEchartsMap.js';
+const userName = getQueryString('user_name');
+const password = getQueryString('password');
 const data = reactive({
-  parkCount: 373,
-  nopersonCount: 170,
-  parkSeat: 1500,
-  orderCount: 1800,
-  onlineOrder: 160,
-  moneyOrder: 650,
-  totalMoney: 18000,
-  chargeData: [
-    {
-      parkName: '慧谷车场-停车场',
-      plate: '粤B235416',
-      content: '停车1小时8秒并支付停车费5元',
-      time: '09:10'
-    },
-    {
-      parkName: '天安小区车场-停车场',
-      plate: '粤BZ6895',
-      content: '停车1小时8秒并支付停车费5元',
-      time: '09:10'
-    },
-    {
-      parkName: '智慧云谷车场-停车场',
-      plate: '粤B23541',
-      content: '停车1小时8秒并支付停车费5元',
-      time: '09:10'
-    }
-  ],
-  securityData: [
-    {
-      parkName: '慧谷车场-停车场',
-      plate: '粤B235416',
-      content: '上传成功',
-      time: '09:10'
-    },
-    {
-      parkName: '天安小区车场-停车场',
-      plate: '粤BZ6895',
-      content: '上传失败',
-      time: '09:10'
-    },
-    {
-      parkName: '智慧云谷车场-停车场',
-      plate: '粤B23541',
-      content: '上传失败',
-      time: '09:10'
-    },
-    {
-      parkName: '智慧云谷车场-停车场',
-      plate: '粤B23541',
-      content: '上传成功',
-      time: '09:10'
-    }
-  ]
+  parkCount: 0,
+  nopersonCount: 0,
+  parkSeat: 0,
+  fixCount: 0,
+  saveDutycount: 0,
+  saveDutymoney: 0,
+  orderCount: 0,
+  onlineOrder: 0,
+  moneyOrder: 0,
+  totalMoney: 0,
+  logo: '',
+  title1: '',
+  title2: '',
+  title3: '',
+  title4: '',
+  title5: '',
+  chargeData: [],
+  securityData: []
 });
 const app = createApp({
   setup() {
@@ -68,82 +35,21 @@ const app = createApp({
     return { date: new Date() };
   },
   mounted() {
-    var parkData = {
-      nameArr: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
-      data: [
-        {
-          name: '人流量',
-          arr: [1200, 150, 32551, 2652, 5412, 1200, 1100]
-        },
-        {
-          name: '车流量',
-          arr: [10000, 1540, 25236, 1500, 1896, 980, 356]
-        }
-      ]
-    };
-    let aa = lineBase(parkData, ['#00c6ff', '#ff724c']);
-    initEcharts(document.querySelector('#left-mid-2-charts'), aa);
-
-    let barData = [
-      {
-        id: 0,
-        name: '天安云谷停车场',
-        value: 120
-      },
-      {
-        id: 0,
-        name: '星河盛世停车场',
-        value: 220
-      },
-      {
-        id: 0,
-        name: '保利国都一号停车场',
-        value: 600
-      },
-      {
-        id: 0,
-        name: '皇家一号停车场',
-        value: 800
-      },
-      {
-        id: 0,
-        name: '天地一方停车场',
-        value: 360
-      }
-    ];
-
-    let cc = barBase(barData, '2021年');
-    initEcharts(document.querySelector('#right-bottom-charts'), cc);
-
-    var myChartMap = echarts.init(document.querySelector('#content-mid-charts'));
-    window.chartMap = myChartMap;
-    initEchartsMap('china', '中国');
-
-    var incomeData = {
-      nameArr: ['03-19', '03-20', '03-21', '03-22', '03-23', '03-24', '03-25'],
-      data: [
-        {
-          name: '总收入',
-          arr: [640, 314, 1302, 1574, 1550, 560, 4165]
-        },
-        {
-          name: '现金收入',
-          arr: [120, 132, 101, 1340, 900, 230, 1065]
-        },
-        {
-          name: '移动收入',
-          arr: [520, 182, 1201, 234, 650, 330, 3100]
-        }
-      ]
-    };
-
-    let dd = lineBase(incomeData);
-    initEcharts(document.querySelector('#right-mid-charts'), dd);
-
+    if (!userName || !password) {
+      document.body.innerHTML = '用户名或密码不能为空！';
+      document.body.classList.add('no-data');
+      return;
+    }
+    this.getData();
+    this.getDataRefresh();
     var _this = this;
     this.timer = setInterval(() => {
       _this.date = new Date(); // 修改日期数据
     }, 1000);
+    this.timer1 = setInterval(() => {
+      this.getData();
+      this.getDataRefresh();
+    }, 20000);
   },
   methods: {
     setZero(a) {
@@ -164,11 +70,140 @@ const app = createApp({
       str += vm.setZero(date.getSeconds()); //获取秒
       str += '</div>';
       return str;
+    },
+    getData() {
+      $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        url: '/park-api/HMKY_getpark_info',
+        data: JSON.stringify({ password: password, user_name: userName }),
+        success: function (res) {
+          if (res.errcode === 0) {
+            data.parkCount = res.park_count;
+            data.nopersonCount = res.noperson_count;
+            data.parkSeat = res.park_seat;
+            data.fixCount = res.fix_count;
+            data.saveDutycount = res.save_dutycount;
+            data.saveDutymoney = res.save_dutymoney;
+            data.title1 = res.title1;
+            data.title2 = res.title2;
+            data.title3 = res.title3;
+            data.title4 = res.title4;
+            data.title5 = res.title5;
+            data.logo = 'data:image/jpg;base64,' + res.pic_log;
+            var mapData = [];
+            res.park_position.forEach(item => {
+              mapData.push({
+                name: item.park_name,
+                value: [item.jin_du, item.wei_du, item.car_seat, item.use_seat]
+              });
+            });
+            sessionStorage.setItem('mapData', JSON.stringify(mapData));
+            var myChartMap = echarts.init(document.querySelector('#content-mid-charts'));
+            window.chartMap = myChartMap;
+            if (res.map_type === 1) {
+              initEchartsMap('china', '中国');
+            } else {
+              initEchartsMap('guangdong', '广东');
+            }
+          } else {
+            alert(res.errmsg);
+          }
+        },
+        error: function (err) {
+          console.log(err);
+        }
+      });
+    },
+    getDataRefresh() {
+      var _this = this;
+      $.ajax({
+        type: 'POST',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        url: '/park-api/HMKY_refreshpark_info',
+        data: JSON.stringify({ password: password, user_name: userName }),
+        success: function (res) {
+          if (res.errcode === 0) {
+            data.totalMoney = res.today_money;
+            data.orderCount = res.order_count;
+            data.onlineOrder = res.online_order;
+            data.moneyOrder = res.money_order;
+            _this.getRevenueData(res.revenue);
+            data.securityData = res.real_data;
+            data.chargeData = res.charge_data;
+            _this.getExcepData(res.excep_data);
+            _this.getInOutData(res.inout_data);
+          } else {
+            alert(res.errmsg);
+          }
+        },
+        error: function (err) {
+          console.log(err);
+        }
+      });
+    },
+    // 收入趋势
+    getRevenueData(data) {
+      if (!data.length) return;
+      var nameArr = data.map(item => item.data_time);
+      var dataArr = [
+        {
+          name: '总收入',
+          arr: data.map(item => item.total_money)
+        },
+        {
+          name: '现金收入',
+          arr: data.map(item => item.manual_money)
+        },
+        {
+          name: '移动收入',
+          arr: data.map(item => item.online_money)
+        }
+      ];
+      var incomeData = { nameArr: nameArr, data: dataArr };
+      initEcharts(document.querySelector('#right-mid-charts'), lineBase(incomeData));
+    },
+    // 异常
+    getExcepData(data) {
+      if (!data.length) return;
+      let barData = [];
+      data.forEach(item => {
+        barData.push({
+          name: item.park_name,
+          value0: item.excep_count,
+          value1: item.excep_complete,
+          value2: item.excep_ratio
+        });
+      });
+      initEcharts(document.querySelector('#right-bottom-charts'), barBase(barData, ['异常总数', '已完成总数', '处理比率']));
+    },
+    // 车流量
+    getInOutData(data) {
+      if (!data.length) return;
+      var parkData = {
+        nameArr: data.map(item => item.inout_date),
+        data: [
+          {
+            name: '出场总数',
+            arr: data.map(item => item.carout_count)
+          },
+          {
+            name: '入场总数',
+            arr: data.map(item => item.carin_count)
+          }
+        ]
+      };
+      initEcharts(document.querySelector('#left-mid-2-charts'), lineBase(parkData, ['#00c6ff', '#ff724c']));
     }
   },
   destroyed() {
     if (this.timer) {
       clearInterval(this.timer); // 在Vue实例销毁前，清除当前日期定时器
+    }
+    if (this.timer1) {
+      clearInterval(this.timer1);
     }
   }
 });
