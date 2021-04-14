@@ -1,0 +1,4 @@
+1、windows查看任务管理器，查看ngix进程是否存在，如果存在，请先结束进程；
+2、启动Nginx服务：打开CMD，cd到D盘nginx目录 （D:\nginx-1.19.9）执行start nginx.exe，查看进程，nginx进程存在，则启动成功。
+3、nginx配置在config目录下，nginx.conf，默认端口为80，（由于80被占用了，我已经修改成了8899）;如果要修改端口，要先结束Nginx进程，再启动Nginx服务即可。
+3、项目路径在：D:\wwwroot\park，更新的时候，替换掉park下文件即可。
